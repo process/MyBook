@@ -11,6 +11,10 @@ the user can review her/his information and make sure it is correct. If
 a correction needs to be made, the user can return to the relevant slide 
 and change the information.
 
+To get a better idea of what it's like, try it yourself:
+http://process.github.io/MyBook/
+Just click the "Sign up" button and begin.
+
 This won the in class competition for the best project.
 
 Authors are myself and Andrew Iovanna
