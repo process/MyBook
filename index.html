@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="css/bootstrap.css" rel="stylesheet" />
+<style>
+body {
+  background: url('img/bookshelf-edited.jpg');
+  background-color: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.body-container {
+  margin-top: 45px;
+}
+
+.welcome-message {
+  margin-top: 50%;
+  text-shadow: black 0 0 10px;
+  color: white;
+}
+
+.actions {
+  margin-top: 45%;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+}
+</style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">MyBook</a>
+          <ul class="nav pull-right">
+            <li class="pull-right"><a href="about.html">About</a></li>
+            <li class="pull-right"><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container body-container">
+      <div class="row">
+        <div class="span7">
+          <div class="welcome-message">
+            <h1>Welcome to MyBook</h1>
+            <h4>Record your life.<br />This site is a work-in-progress.</h4>
+          </div>
+        </div>
+        <div class="span5">
+          <div class="actions">
+          <h3>Sign in</h3>
+            <form>
+              <label for="inputEmail">Email</label>
+              <input type="text" id="inputEmail" placeholder="Your Email Address">
+              
+              <label for="inputPassword">Password</label>
+              <input type="password" id="inputPassword" placeholder="Password">
+              
+              <label class="checkbox">
+                <input type="checkbox"> Remember me
+              </label>
+              
+              <button type="submit" class="btn btn-large">Sign in</button>
+            </form>
+          
+          <h5>Don't have an account? Signing up is easy.</h5>
+          <a class="btn btn-large btn-primary" href="signup.html">Sign up</a>
+          </div>
+        </div>
+      </div>
+    </div> <!-- /container -->
+</body>
+</html>

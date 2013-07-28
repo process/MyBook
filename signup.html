@@ -1,0 +1,421 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="css/bootstrap.css" rel="stylesheet" />
+<link href="css/jquery-ui.smoothness.css" rel="stylesheet" />
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+  var userGender = "none";
+  var reviewState = false;
+  
+  function validateName() {
+    if($('#first-name').val() == "" || $('#last-name').val() == "") {
+      $('#name-error').css('display', 'block');
+    }
+    else {
+      $('#name-error').css('display', 'none');
+      
+      if (reviewState) {
+        collectData();
+        $('.carousel').carousel(10).carousel('pause');
+      }
+      else {
+        $('.carousel').carousel('next');
+      }
+    }
+  }
+  
+  function validateEmail() {
+    if($('#email').val() == "") {
+      $('#email-error').css('display', 'block');
+    }
+    else {
+      $('#email-error').css('display', 'none');
+      if (reviewState) {
+        collectData();
+        $('.carousel').carousel(10).carousel('pause');
+      }
+      else {
+        $('.carousel').carousel('next');
+      }
+    }
+  }
+
+  function validatePasswords() {
+    var password1 = $('#password').val();
+    var password2 = $('#password-confirm').val();
+    
+    if (password1 == password2 && password1 != "") {
+      $('#password-error').css('display', 'none');
+      if (reviewState) {
+        collectData();
+        $('.carousel').carousel(10).carousel('pause');
+      }
+      else {
+        $('.carousel').carousel('next');
+      }
+    }
+    else {
+      $('#password-error').css('display', 'block');
+    }
+  }
+  
+  function setGender(gender) {
+    // Could be improved
+    if (gender=="male") {
+      $('#male').css('box-shadow', 'inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)');
+      $('#female').css('box-shadow', 'none');
+      userGender = "male"
+    }
+    else {
+      $('#female').css('box-shadow', 'inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05)');
+      $('#male').css('box-shadow', 'none');
+      userGender = "female";
+   }
+  }
+  
+  function addHobbyInput() {
+    // Not used for now
+    var hobbyInputs = document.getElementById('hobbies');
+    
+    var br = document.createElement('br');
+    var input = document.createElement('input');
+    
+    hobbyInputs.appendChild(br);
+    hobbyInputs.appendChild(input);
+  }
+  
+  function enterReviewState() {
+    reviewState = true;
+    collectData();
+    
+    // Remove back buttons
+    $('.back').css('display', 'none');
+    
+    // Kill original 'next' link targets
+    $('.next').attr('href', "#");
+    
+    // Add new handlers which recollects data and returns to review page
+    $('.next').click(function () {
+      collectData();
+      $('.carousel').carousel(10).carousel('pause');
+    });
+    
+    // Go to review page
+    $('.carousel').carousel(10).carousel('pause');
+  }
+      
+  function collectData() {
+    firstName = $('#first-name').val();
+    lastName = $('#last-name').val();
+    email = $('#email').val();
+    image_name = $('#upload').val() || "<i>You didn't choose an image to upload</i>";
+    occupation = $('#occupation').val() || "<i>Nothing given</i>";
+    locationInput = $('#location-input').val() || "<i>Nothing given</i>";
+    hobbies = $('#hobby1').val() + ', ' + $('#hobby2').val() + ', ' + $('#hobby3').val() + ', ' + $('#hobby4').val() + ', ' + $('#hobby5').val();
+    birthdate = $('#birthdate-input').val() || "<i>Nothing given</i>";
+    
+    $('#name-review').html(firstName + ' ' + lastName);
+    $('#email-review').html(email);
+    $('#gender-review').html(userGender);
+    $('#location-review').html(locationInput);
+    $('#occupation-review').html(occupation);
+    $('#hobby-review').html(hobbies);
+    $('#birthdate-review').html(birthdate);
+    $('#image-review').html(image_name);
+  } 
+
+  $(function () {
+    $('.carousel').carousel('pause');
+    $('#birthdate-input').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      minDate: new Date(1900,0,0),
+      maxDate: 0,
+      yearRange: "1900:2003",
+      defaultDate: new Date(1990,0,1)
+    });
+  });
+</script>
+<style>
+body {
+  background: url('img/stucco-background.png');
+}
+
+p {
+  font-size: 14pt;
+}
+
+.body-container {
+  margin-top: 60px;
+}
+
+.content {
+  padding: 15px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.small {
+  font-size: 10pt;
+}
+
+.gender-pressed {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+</style>
+</head>
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="index.html">MyBook</a>
+        <ul class="nav pull-right">
+          <li class="pull-right"><a href="about.html">About</a></li>
+          <li class="pull-right"><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    
+  <div class="container body-container">
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="active item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>Signing up for MyBook is easier than ever.</h2>
+              <p>The whole process should only take you a few minutes.</p>
+              <p>You will be able to review your information before you create your account.</p>
+              <a class="btn btn-primary pull-right" href="#myCarousel" data-slide="next">Let's start!</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What's your name?<span class="small">(required)</span></h2> 
+              First Name: <input id="first-name" type="text"><br />
+              Last Name: <input id="last-name" type="text"><br />
+              
+              <div id="name-error" style="display: none;" class="alert alert-error">You must enter a first and last name</div>
+              
+              <div class="pull-right">
+                <button class="btn btn-primary" onclick="validateName();">Next</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What's your email address?<span class="small">(required)</span></h2>
+              Email: <input id="email" type="text"><br />
+              
+              <div id="email-error" class="alert alert-error" style="display: none;">You must enter an email address</div>
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <button class="btn btn-primary" onclick="validateEmail();">Next</button>  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What password do you want to use?<span class="small">(required)</span></h2>
+              Password: <input id="password" type="password"><br />
+              Confirm: <input id="password-confirm" type="password"><br />
+              
+              <div id="password-error" style="display: none;" class="alert alert-error">Your password must not be blank, and the two fields must match</div>
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <button class="btn btn-primary" onclick="validatePasswords();">Next</button> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span8 offset2 content">
+              <h2>What's your gender?</h2>
+              <div style="margin-left: auto; margin-right: auto; width: 80%;">
+                <button onclick="setGender('male');" id="male" style="margin-left: auto;" class="btn btn-large"><img src="img/male.png" /><br />Male</button>     
+                <button onclick="setGender('female');" id="female" style="margin-right: auto;" class="btn btn-large"><img src="img/female.png" /><br />Female</button>
+              </div>
+              <br />
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" href="#myCarousel" data-slide="next">Next</a>                
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What's your birthdate?</h2>
+              <p>Use the calendar to select the day you were born.</p>
+              
+              <div id="birthdate-input"></div><br />
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" href="#myCarousel" data-slide="next">Next</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>Where do you live?</h2>
+              
+              Location: <input id="location-input" type="text"><br />
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" href="#myCarousel" data-slide="next">Next</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What's your occupation?</h2>
+              
+              Occupation: <input type="text" id="occupation"><br />
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" href="#myCarousel" data-slide="next">Next</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>What are your hobbies?</h2>
+              <div id="hobbies">
+                Hobby 1: <input id="hobby1" type="text"><br />
+                Hobby 2: <input id="hobby2" type="text"><br />
+                Hobby 3: <input id="hobby3" type="text"><br />
+                Hobby 4: <input id="hobby4" type="text"><br />
+                Hobby 5: <input id="hobby5" type="text"><br />
+              </div>
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" href="#myCarousel" data-slide="next">Next</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>Upload a picture of yourself if you'd like.</h2>
+              
+              Choose file: <input id="upload" type="file">
+              <br />
+              
+              <a class="btn btn-primary back" href="#myCarousel" data-slide="prev">Back</a>
+              <div class="pull-right">
+                <a class="btn btn-primary next" onclick="enterReviewState();">Review</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>Review your information</h2>
+              <h4>Make sure your information is correct!</h4>
+              
+              <b>Your Name</b><br />
+              <span id="name-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(1).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Your email address</b><br />
+              <span id="email-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(2).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Your password</b><br />
+              Password not shown for security reasons.<br />
+              <a href="#" onclick="$('.carousel').carousel(3).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Gender</b><br />
+              You're a <span id="gender-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(4).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Birthdate</b><br />
+              <span id="birthdate-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(5).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Where you live</b><br />
+              <span id="location-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(6).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Occupation</b><br />
+              <span id="occupation-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(7).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Hobbies</b><br />
+              Your hobbies include
+              <span id="hobby-review"></span><br />
+              <a href="#" onclick="$('.carousel').carousel(8).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <b>Image</b><br />
+              <span id='image-review'></span><br />
+              <a href="#" onclick="$('.carousel').carousel(9).carousel('pause');">Edit this information</a>
+              <br />
+              <br />
+              
+              <div class="alert alert-info"><b>Hey!</b> Make sure your email address and password are correct! They are needed to log in to your account.</div>
+              
+              <div class="pull-right">
+                <a class="btn btn-primary" href="#myCarousel" data-slide="next">Submit</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="row">
+            <div class="span6 offset3 content">
+              <h2>Thanks for signing up.</h2>
+              <h4>
+              Additional information has been sent to the email address you provided. 
+              This page can be safely closed.
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
